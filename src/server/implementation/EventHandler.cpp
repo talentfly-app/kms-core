@@ -18,13 +18,15 @@
 #include "EventHandler.hpp"
 #include <WorkerPool.hpp>
 
+const int EVENTHANDLER_THREADS_DEFAULT = 10;
+
 namespace kurento
 {
 
 static void
 post_task (std::function <void () > cb)
 {
-  static WorkerPool workers (1);
+  static WorkerPool workers (EVENTHANDLER_THREADS_DEFAULT);
 
   workers.post (cb);
 }
