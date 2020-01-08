@@ -1,3 +1,12 @@
+kms-core (6.13.0-0kurento1) testing; urgency=medium
+
+  * Prepare release 6.13.0-0kurento1
+  * debian/control: Add missing dependency
+  * fixup! debian/control: Add missing dependency
+  * debian/control: Add build-essential to Build-Depends
+
+ -- Juan Navarro <juan.navarro@gmx.es>  Tue, 17 Dec 2019 13:37:54 +0100
+
 kms-core (6.12.0-0kurento1) testing; urgency=medium
 
   * Prepare release 6.12.0-0kurento1
