@@ -149,6 +149,8 @@ BaseRtpEndpointImpl::updateMediaState (guint new_state)
   }
 
   if (old_state->getValue() != current_media_state->getValue() ) {
+    GST_DEBUG_OBJECT (element, "MediaState changed to '%s'",
+        current_media_state->getString().c_str());
     try {
       MediaStateChanged event (shared_from_this (),
           MediaStateChanged::getName (), old_state, current_media_state);
@@ -184,6 +186,8 @@ BaseRtpEndpointImpl::updateConnectionState (gchar *sessId, guint new_state)
   }
 
   if (old_state->getValue() != current_conn_state->getValue() ) {
+    GST_DEBUG_OBJECT (element, "ConnectionState changed to '%s'",
+        current_conn_state->getString().c_str());
     try {
       ConnectionStateChanged event (shared_from_this(),
           ConnectionStateChanged::getName (), old_state, current_conn_state);
@@ -244,23 +248,6 @@ void BaseRtpEndpointImpl::setMaxVideoSendBandwidth (int maxVideoSendBandwidth)
 std::shared_ptr<MediaState>
 BaseRtpEndpointImpl::getMediaState ()
 {
-  current_media_state = std::make_shared <MediaState> (MediaState::DISCONNECTED);
-
-  for (auto &mediaFlowInState : mediaFlowInStates) {
-    if (mediaFlowInState.second->getValue() == MediaFlowState::FLOWING) {
-      current_media_state = std::make_shared <MediaState> (MediaState::CONNECTED);
-      goto end;
-    }
-  }
-
-  for (auto &mediaFlowOutState : mediaFlowOutStates) {
-    if (mediaFlowOutState.second->getValue() == MediaFlowState::FLOWING) {
-      current_media_state = std::make_shared <MediaState> (MediaState::CONNECTED);
-      goto end;
-    }
-  }
-
-end:
   return current_media_state;
 }
 
